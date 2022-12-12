@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=61.0", "setuptools_scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "adventofcode"
+description = "Advent of Code"
+readme = "README.md"
+authors=[
+  {name= "Guillaume Alleon",  email = "guillaume.alleon@gmail.com"},
+]
+license={text = "MIT"}
+classifiers = [
+    "Intended Audience :: Developers",
+    "Development Status :: 4 - Beta",
+    "Topic :: Software Development",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Topic :: Software Development",
+    "Topic :: Scientific/Engineering",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "networkx",
+    "numpy",
+    "python-dotenv",
+    "requests",
+    "z3",
+]
+dynamic = ["version", "readme"]
+
+[tool.distutils.bdist_wheel]
+universal = true
+
+[project.optional-dependencies]
+test = ["pytest", "pytest-cov", "requests_mock"]
+
+[tool.setuptools.dynamic]
+version = {attr = "setuptools_scm.get_version"}
+readme = {file = "README.md"}
+
+[tool.setuptools_scm]
+# write_to = "src/aoc/_version.py"
+local_scheme = 'no-local-version'
+version_scheme = 'post-release'
