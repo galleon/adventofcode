@@ -6,7 +6,7 @@ class Graph(object):
     """Graph data structure, undirected by default."""
 
     def __init__(self, start=None, destination=None, connections=[], directed=False):
-        self._entry = entry
+        self._start = start
         self._destination = destination
         self._graph = defaultdict(set)
         self._directed = directed
@@ -47,10 +47,10 @@ class Graph(object):
         path = path + [start]
         if start == end:
             return [path]
-        if start not in self.graph:
+        if start not in self:
             return []
         paths = []
-        for node in graph[start]:
+        for node in self._graph[start]:
             if node not in path:
                 new_paths = self.find_paths(node, end, path)
                 for new_path in new_paths:
@@ -64,7 +64,7 @@ class Graph(object):
         if start == self._destination:
             return 1
 
-        if start == self._entry and visited[start] > 0:
+        if start == self._start and visited[start] > 0:
             return 0
 
         # if start has already been visited, return 0
@@ -104,7 +104,7 @@ class Graph(object):
         if start == end:
             return 1
 
-        if start == self._entry and visited[start] > 0:
+        if start == self._start and visited[start] > 0:
             return 0
 
         # if start has already been visited, return 0
@@ -124,6 +124,9 @@ class Graph(object):
 
         return result
 
+    def __contains__(self, item):
+        return item in self._graph
+
     def __str__(self):
         return self._graph.__str__()
 
@@ -141,7 +144,7 @@ class Board:
         "SW": (-1, -1),
     }
 
-    def __init__(self, width=None, height=None, operator=int):
+    def __init__(self, width=0, height=0, operator=int):
         self._width = width
         self._height = height
         self._kv = {}
@@ -176,6 +179,10 @@ class Board:
     def __setitem__(self, xy, value):
         # print(f"Setting {xy} to {value} as {type(value)}")
         self._kv[xy] = value
+        if xy[0] > self._width:
+            self._width = xy[0]
+        if xy[1] > self._height:
+            self._height = xy[1]
 
     def __delitem__(self, key):
         del self._kv[key]

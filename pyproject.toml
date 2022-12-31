@@ -5,7 +5,6 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "adventofcode"
 description = "Advent of Code"
-readme = "README.md"
 authors=[
   {name= "Guillaume Alleon",  email = "guillaume.alleon@gmail.com"},
 ]
@@ -23,9 +22,11 @@ requires-python = ">=3.8"
 dependencies = [
     "networkx",
     "numpy",
+    "portion",
     "python-dotenv",
     "requests",
-    "z3",
+    "termcolor",
+    "z3-solver",
 ]
 dynamic = ["version", "readme"]
 
@@ -33,7 +34,7 @@ dynamic = ["version", "readme"]
 universal = true
 
 [project.optional-dependencies]
-test = ["pytest", "pytest-cov", "requests_mock"]
+test = ["pytest"]
 
 [tool.setuptools.dynamic]
 version = {attr = "setuptools_scm.get_version"}

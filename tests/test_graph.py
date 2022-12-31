@@ -1,8 +1,7 @@
-import sys
+from aoc.data import Graph
 
 
 def test_paths():
-    print(f"PYTHON_PATH: {sys.path}")
     g = Graph()
     g.add(1, 2)
     g.add(1, 3)
