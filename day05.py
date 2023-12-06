@@ -60,17 +60,21 @@ class AdventDay5(AdventDay):
         seeds, maps = self.read_input()
 
         def process_range_through_maps(seed_range, maps):
+            # Go through the different types of maps
             for mapping in maps:
                 seed_range = transform_range(seed_range, mapping)
             return seed_range
 
         def transform_range(input_range, mapping_rules):
             transformed_ranges = []
+            # Go through the seed ranges
             for start, length in input_range:
                 end = start + length
+                # Go through the different sub-mappings
                 for dest_start, src_start, src_length in mapping_rules:
                     src_end = src_start + src_length
-                    if src_start < end and src_end > start:  # Check for overlap
+                    # Check if the seed range overlaps with the sub-mapping
+                    if src_start < end and src_end > start:
                         overlap_start = max(start, src_start)
                         overlap_end = min(end, src_end)
                         overlap_length = overlap_end - overlap_start
@@ -79,8 +83,7 @@ class AdventDay5(AdventDay):
             return merge_transformed_ranges(transformed_ranges)
 
         def merge_transformed_ranges(transformed_ranges):
-            # Merging and handling overlapping ranges is a complex task
-            # This implementation might need adjustments based on specific requirements
+            # Merge final sub mappings
             merged = []
             for start, length in sorted(transformed_ranges):
                 if not merged or start > merged[-1][0] + merged[-1][1]:
@@ -91,6 +94,7 @@ class AdventDay5(AdventDay):
 
         final_ranges = []
         for i in range(0, len(seeds), 2):
+            # Go through the seed ranges
             seed_start, seed_length = seeds[i], seeds[i + 1]
             final_ranges.append((seed_start, seed_length))
 
